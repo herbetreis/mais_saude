@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'new-meal',
+    loadChildren: () => import('./meals/new-meal/new-meal.module').then( m => m.NewMealPageModule)
+  },
+  {
+    path: 'user-settings',
+    loadChildren: () => import('./settings/user-settings/user-settings.module').then( m => m.UserSettingsPageModule)
+  },
 ];
 
 @NgModule({
