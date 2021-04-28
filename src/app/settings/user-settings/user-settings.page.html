@@ -2,23 +2,38 @@
   <ion-toolbar color="primary">
       <ion-buttons slot="start">
           <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
 
-      </ion-buttons>
-      <ion-label><h1><center>Configurações do Usuário</center></h1></ion-label>
-      <ion-buttons slot="secondary">
-          <ion-button>
-          </ion-button>
-      </ion-buttons>
+      <div class="ion-text-center">
+      <ion-label><h1>Configurações do Usuário</h1></ion-label>
+      </div> 
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
       <img src="../../../assets/person-circle-outline.svg">
-      <ion-item>
-      </ion-item>
+
       <br>  
-      <ion-label><h1><center>Nome</center></h1></ion-label>
+      <ion-item>
+        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar usuário</ion-label>
+        <ion-input class="user.settings.input"></ion-input>
+      </ion-item>
 
+      <br>
+      <ion-item>
+        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar senha</ion-label>
+        <ion-input class="user.settings.input"></ion-input>
+      </ion-item>  
 
+      <br>
+      <ion-item>
+        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar meta calorias</ion-label>
+        <ion-input class="user.settings.input"></ion-input>
+      </ion-item>  
+      <br>
+      <br>
+      <br>
+        <ion-button Expand="block"> Salvar </ion-button>
 
 </ion-content>

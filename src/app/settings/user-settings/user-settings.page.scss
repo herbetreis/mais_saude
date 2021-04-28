@@ -10,3 +10,23 @@ img{
   .scroll{
     height:100% !important
   }
+
+  ion-label.user-settings {
+  //display: flex;
+  // height: 50%;
+  //justify-content: center;
+  //align-items: center;
+  font-size: 17px;
+  //font-weight: 600;
+  // font-family: monospace;
+}
+
+ion-col.user.settings.input{
+
+  height: 100px
+}
+
+ion-button.login-button{
+  --background: #FFFFFF;
+  --color: #62BFDD;
+}
