@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Novo Alimento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-label position="floating" color="primary" >Nome do Alimento</ion-label>
+    <ion-input autofocus=True></ion-input>
+  </ion-item>
+
+  <ion-item>  
+    <ion-label position="floating" color="primary" >Peso de referência</ion-label>
+    <ion-input type="number" value=100> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" color="primary" >Unidade de medida</ion-label>
+    <ion-select value="1" size=4>
+      <ion-select-option value="1">Gramas</ion-select-option>
+      <ion-select-option value="2">Quilos</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" color="primary" >Calorias de referência</ion-label>
+    <ion-input type="number" required=true></ion-input>
+  </ion-item>
+
+  <div class='save-button'>
+    <ion-button shape="round"> Salvar </ion-button>
+  </div>
+
+  
+</ion-content>
