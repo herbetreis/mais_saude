@@ -2,27 +2,39 @@
   padding-bottom: 0;
 }
 
+.card-label {
+  font-weight: 600;
+}
+
 .card-follow-up {
   .info-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 15px;
 
     .info {
       display: flex;
       flex-direction: column;
+      padding-right: 10px;
+
+      &:last-of-type {
+        padding-right: 0;
+      }
 
       .title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &.percent {
           color: hotpink;
           text-align: center;
         }
-
-        font-size: 1.5rem;
-        font-weight: 600;
       }
 
       .subtitle {
+        font-size: .7rem;
         font-weight: 600;
       }
     }
@@ -39,6 +51,9 @@
 
       .text {
         margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -50,6 +65,56 @@
 
     svg {
       position: absolute;
+    }
+  }
+}
+
+.card-daily {
+  display: flex;
+  justify-content: space-around;
+  .column {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &.center {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      padding-right: 10px;
+
+      &:last-of-type {
+        padding-right: 0;
+      }
+
+      .title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.tiny {
+          color: hotpink;
+          font-size: 1rem;
+        }
+      }
+
+      .subtitle {
+        font-weight: 600;
+        font-size: .7rem;
+      }
     }
   }
 }
