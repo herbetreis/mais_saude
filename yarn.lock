@@ -157,7 +157,7 @@
   dependencies:
     eslint-scope "^5.1.0"
 
-"@angular/cli@~11.2.4":
+"@angular/cli@11.2.10":
   version "11.2.10"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-11.2.10.tgz#ce9337946980b91dda88a0ef2be872ffa409a1a2"
   integrity sha512-x7u36KmX1iiyDZhkeB6yXRrNj1no+mf6arnAvJYXH2JxqsZDqp19hP8b1QcGVMSl9CZUT/vA0KT3XuI4aJ6TfQ==
