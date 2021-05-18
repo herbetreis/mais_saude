@@ -1,0 +1,43 @@
+<ion-content color="primary" padding>
+  <form #f="ngForm" (ngSubmit)="register(f)">
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h1>Cadastro</h1>
+          </div>
+          <div padding>
+            <ion-item>
+              <ion-label position="floating" color="primary">Nome</ion-label>
+              <ion-input name="name" type="text" placeholder="Name" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating" color="primary">Email</ion-label>
+              <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating" color="primary">Senha</ion-label>
+              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating" color="primary">Confirme sua senha</ion-label>
+              <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
+            </ion-item>
+          </div>
+          <div class="ion-text-center" padding>
+            <ion-button
+              type="submit"
+              size="medium"
+              class="login-button"
+              shape="round"
+              [disabled]="f.invalid"
+              expand="block"
+            >
+              Cadastrar
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

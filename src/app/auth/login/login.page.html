@@ -1,0 +1,38 @@
+<ion-content color="primary" padding>
+  <form #f="ngForm" (ngSubmit)="login(f)">
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h1>Login</h1>
+          </div>
+          <div padding>
+            <ion-item>
+              <ion-label position="floating" color="primary">Email</ion-label>
+              <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating" color="primary">Senha</ion-label>
+              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+            </ion-item>
+          </div>
+          <div class="ion-text-center" padding>
+            <ion-button
+              type="submit"
+              size="medium"
+              class="login-button"
+              shape="round"
+              [disabled]="f.invalid"
+              expand="block"
+            >
+              Acessar
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <div *ngIf="showError">Error! Please try again</div>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
