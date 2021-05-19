@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
         if (res) {
           this.showError = false;
           // this.router.navigateByUrl(`home/${res.id}`);
-          form.reset()
+          form.reset();
           this.router.navigateByUrl('home');
         } else {
           this.showError = true;

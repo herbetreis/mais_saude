@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
+
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,13 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private storage: Storage) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   async ngOnInit() {
-    await this.storage.create();
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+      if (isLoggedIn === true && this.router.routerState.snapshot.url?.startsWith('/login')) {
+        this.router.navigate(['home']);
+      }
+    });
   }
 }
