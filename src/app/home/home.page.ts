@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {homeList} from 'src/app/offline_data/data';
 
 interface KeyValue {
   value: string | number;
@@ -50,23 +51,7 @@ export class HomePage {
     }
   }
 
-  public meals: Meal[] = [
-    {
-      title: 'Café da manhã 01/04',
-      caloriesConsumed: {
-        value: '1347 Kcal',
-        label: 'Kcal consumidas'
-      },
-      time: {
-        value: '08:15',
-        label: 'Horário'
-      },
-      foods: {
-        value: 'Café, pão, manteiga, ovos, morango',
-        label: 'Alimentos consumidos'
-      }
-    }
-  ]
+  public meals = homeList;
 
   constructor() {}
 
