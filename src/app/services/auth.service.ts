@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 // import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
 
-import { User } from '../typings/user';
+import { User } from '../typings/types';
 
 @Injectable({
   providedIn: 'root'
