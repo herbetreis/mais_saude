@@ -1,4 +1,4 @@
-<ion-content color="primary" padding>
+<ion-content color="primary">
   <form #f="ngForm" (ngSubmit)="register(f)">
     <ion-grid>
       <ion-row justify-content-center>
@@ -6,7 +6,7 @@
           <div class="ion-text-center">
             <h1>Cadastro</h1>
           </div>
-          <div padding>
+          <div>
             <ion-item>
               <ion-label position="floating" color="primary">Nome</ion-label>
               <ion-input name="name" type="text" placeholder="Name" ngModel required></ion-input>
@@ -24,7 +24,7 @@
               <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
             </ion-item>
           </div>
-          <div class="ion-text-center" padding>
+          <div class="ion-text-center">
             <ion-button
               type="submit"
               size="medium"
@@ -35,8 +35,14 @@
             >
               Cadastrar
             </ion-button>
+            <a routerLink="/login" class="login-link" routerDirection="back">Fazer login</a>
           </div>
         </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <div *ngIf="showError">Error!</div>
+        <div *ngIf="showErrorEmail">Error! Por favor, tente com um email diferente</div>
+        <div *ngIf="showErrorPassword">Error! As senhas precisam ser idênticas.</div>
       </ion-row>
     </ion-grid>
   </form>
