@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {homeList} from 'src/app/offline_data/data';
+
+import { homeList } from '../offline_data/data';
 
 interface KeyValue {
   value: string | number;
   label: string;
 }
+
 interface DashboardData {
   title: string;
   caloriesConsumed: KeyValue;
@@ -13,6 +15,7 @@ interface DashboardData {
   yesterday: KeyValue;
   averageWeek: KeyValue;
 }
+
 interface Meal {
   title: string;
   caloriesConsumed: KeyValue;
@@ -23,7 +26,7 @@ interface Meal {
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
 export class HomePage {
 
@@ -49,7 +52,7 @@ export class HomePage {
       value: '97,30%',
       label: 'Média semana'
     }
-  }
+  };
 
   public meals = homeList;
 

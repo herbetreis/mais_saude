@@ -98,6 +98,7 @@ export class AuthService {
   public async logout() {
     this.user = null;
     this.authSubject.next(false);
+    await this._storage.remove(STORAGE_USER)
     await this.saveAtStorage();
   }
 

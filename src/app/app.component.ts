@@ -9,6 +9,36 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+
+  public pages = [
+    {
+      title: 'Dashboard',
+      url: '/home',
+      onClick: (activeIndex, i) => {
+        activeIndex = i;
+      },
+      icon: 'albums'
+    },
+    {
+      title: 'Profile',
+      url: '/user-settings',
+      onClick: (activeIndex, i) => {
+        activeIndex = i;
+      },
+      icon: 'person'
+    },
+    {
+      title: 'Logout',
+      url: '',
+      onClick: (activeIndex, i) => {
+        activeIndex = i;
+        this.logout();
+      },
+      icon: 'log-out'
+    }
+  ];
+
   constructor(private authService: AuthService, private router: Router) {}
 
   async ngOnInit() {
@@ -17,5 +47,10 @@ export class AppComponent implements OnInit {
         this.router.navigate(['home']);
       }
     });
+  }
+
+  private logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 }
