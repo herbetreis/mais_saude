@@ -17,15 +17,29 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login(form) {
-    this.authService.login(form.value).subscribe((res) => {
-      if (res.status == 200) {
-        this.showError = false;
-        this.router.navigateByUrl(`home/${res.user_id}`);
-      } else {
-        this.showError = true;
+  // public login(form) {
+  //   this.authService.login(form.value).subscribe((res) => {
+  //     if (res.status == 200) {
+  //       this.showError = false;
+  //       this.router.navigateByUrl(`home/${res.user_id}`);
+  //     } else {
+  //       this.showError = true;
+  //     }
+  //   });
+  // }
+
+  public login(form) {
+    this.authService.login(form.value).then(res => {
+        if (res) {
+          this.showError = false;
+          // this.router.navigateByUrl(`home/${res.id}`);
+          form.reset()
+          this.router.navigateByUrl('home');
+        } else {
+          this.showError = true;
+        }
       }
-    });
+    );
   }
 
 }

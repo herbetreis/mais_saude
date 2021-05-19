@@ -1,4 +1,4 @@
-<ion-content color="primary" padding>
+<ion-content color="primary">
   <form #f="ngForm" (ngSubmit)="login(f)">
     <ion-grid>
       <ion-row justify-content-center>
@@ -6,7 +6,7 @@
           <div class="ion-text-center">
             <h1>Login</h1>
           </div>
-          <div padding>
+          <div>
             <ion-item>
               <ion-label position="floating" color="primary">Email</ion-label>
               <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
@@ -16,7 +16,7 @@
               <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
             </ion-item>
           </div>
-          <div class="ion-text-center" padding>
+          <div class="ion-text-center">
             <ion-button
               type="submit"
               size="medium"
@@ -27,11 +27,12 @@
             >
               Acessar
             </ion-button>
+            <a routerLink="/register" class="register-link">Cadastrar</a>
           </div>
         </ion-col>
       </ion-row>
       <ion-row justify-content-center>
-        <div *ngIf="showError">Error! Please try again</div>
+        <div *ngIf="showError">Error! Email ou senha incorretos</div>
       </ion-row>
     </ion-grid>
   </form>
