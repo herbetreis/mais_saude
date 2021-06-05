@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-
-import { homeList } from '../offline_data/data';
+import { Router } from '@angular/router';
 
 interface KeyValue {
   value: string | number;
@@ -17,11 +17,19 @@ interface DashboardData {
 }
 
 interface Meal {
-  title: string;
-  caloriesConsumed: KeyValue;
-  time: KeyValue;
-  foods: KeyValue;
+  _id: string;
+  user_id: string;
+  tipo_refeicao: string;
+  data_refeicao: string;
+  hora_refeicao: string;
+  alimentos: [Food];
 }
+
+interface Food {
+  Nome : string;
+  Calorias : number;
+  Quantidade : number;
+};
 
 @Component({
   selector: 'app-home',
@@ -54,8 +62,21 @@ export class HomePage {
     }
   };
 
-  public meals = homeList;
+  public meals : Meal[];
 
-  constructor() {}
+  constructor(private http: HttpClient, private router: Router) { }  
+
+  private async getMeals () {
+    const url = "https://maissaudews.azurewebsites.net/api/listar_refeicoes?code=N7DQG2DjirAOGVgixaZhRLYtH6sTp/KFNbyVGWe6Mv9zFZQS5G4SEA==";
+    const body = {"user_id" : "1"}
+    const result = await this.http.post<Meal[]>(url,body).toPromise();
+    this.meals = result
+    
+  }
+
+  ngOnInit() {
+    this.getMeals();
+
+  }
 
 }
