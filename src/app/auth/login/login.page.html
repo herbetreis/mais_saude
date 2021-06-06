@@ -32,7 +32,7 @@
         </ion-col>
       </ion-row>
       <ion-row justify-content-center>
-        <div *ngIf="showError">Error! Email ou senha incorretos</div>
+        <div *ngIf="showError">{{errorMessage}}</div>
       </ion-row>
     </ion-grid>
   </form>

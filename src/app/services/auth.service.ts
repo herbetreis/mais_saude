@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase';
 
 import { User, ApiError } from '../typings/types';
 
-// const AUTH_SERVER: string = 'http://localhost:3000';
 const STORAGE_USERS: string = 'users';
 export const STORAGE_USER: string = 'userLoggedIn';
 
@@ -19,10 +17,6 @@ export class AuthService {
   private authSubject = new BehaviorSubject(null);
   private users: User[] = [];
   private user: User = null;
-
-  // constructor(private httpClient: HttpClient, private storage: Storage) {
-  //   this.loadUsers();
-  // }
 
   constructor(private storage: Storage, private fAuth: AngularFireAuth) {
     this.onInit();
@@ -56,51 +50,55 @@ export class AuthService {
     await this._storage?.set(STORAGE_USER, this.user);
   }
 
-  private findByEmail(email: string): User | null {
-    const user = this.users.find(c => c.email === email);
+  private findById(uid: string): User | null {
+    const user = this.users.find(c => c.id === uid);
     if (user) return { ...user };
     return null;
   }
 
-  // public register(userInfo: User): Observable<User> {
-  //   return this.httpClient.post<User>(`${AUTH_SERVER}/register`, userInfo);
-  // }
+  private async createUserInStorage(userInfo: User, firebaseUser: firebase.auth.UserCredential) {
+    const user = { name: userInfo.name, id: firebaseUser.user.uid };
+    this.users.push(user);
+    await this.saveAtStorage();
+    return { user };
+  }
 
   public async register(userInfo: User): Promise<{ user?: User; error?: ApiError }> {
     try {
-      const firebaseUser = await this.fAuth.createUserWithEmailAndPassword(
+      const firebaseUser: firebase.auth.UserCredential = await this.fAuth.createUserWithEmailAndPassword(
         userInfo.email,
         userInfo.password
       );
-      const user = { name: userInfo.name, id: firebaseUser.user.uid };
-      this.users.push(user);
+      return this.createUserInStorage(userInfo, firebaseUser);
+    } catch (error) {
+      if (error?.code === 'auth/email-already-in-use') {
+        const userLogged = await this.login(userInfo);
+        await this.logout();
+        if (userLogged?.firebaseUser) {
+          // does not have user in localstorage,
+          // maybe create them and return the user
+          await this.createUserInStorage(userInfo, userLogged.firebaseUser);
+        }
+      }
+      return { error };
+    }
+  }
+
+  public async login(userInfo: User): Promise<{ user?: User; error?: ApiError; firebaseUser?: firebase.auth.UserCredential }> {
+    try {
+      const firebaseUser: firebase.auth.UserCredential = await this.fAuth.signInWithEmailAndPassword(
+        userInfo.email,
+        userInfo.password
+      );
+      const user = this.findById(firebaseUser.user.uid);
+      if (!user) return { firebaseUser };
+      this.user = { ...user };
+      this.authSubject.next(true);
       await this.saveAtStorage();
       return { user };
     } catch (error) {
       return { error };
     }
-  }
-
-  // public login(userInfo: User): Observable<any> {
-  //   return this.httpClient.post(`${AUTH_SERVER}/login`, userInfo).pipe(
-  //     tap(async (res: { status: number, access_token, expires_in, user_id }) => {
-  //       if (res.status !== 404) {
-  //         await this._storage?.set('ACCESS_TOKEN', res.access_token);
-  //         await this._storage?.set('EXPIRES_IN', res.expires_in);
-  //         await this._storage?.set('USER_ID', res.user_id);
-  //       }
-  //     })
-  //   );
-  // }
-
-  public async login(userInfo: User): Promise<User | null> {
-    const { email, password } = userInfo;
-    const user = this.findByEmail(email);
-    if (!(user?.password === password)) return null;
-    this.user = { ...user };
-    this.authSubject.next(true);
-    await this.saveAtStorage();
-    return user;
   }
 
   public async logout() {
