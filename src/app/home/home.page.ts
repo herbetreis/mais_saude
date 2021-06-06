@@ -1,13 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-
-import { homeList } from '../offline_data/data';
+import { Router } from '@angular/router';
 
 interface KeyValue {
   value: string | number;
   label: string;
 }
 
-interface DashboardData {
+interface Summary {
   title: string;
   caloriesConsumed: KeyValue;
   caloriesTarget: KeyValue;
@@ -17,10 +17,23 @@ interface DashboardData {
 }
 
 interface Meal {
-  title: string;
-  caloriesConsumed: KeyValue;
-  time: KeyValue;
-  foods: KeyValue;
+  _id: string;
+  user_id: string;
+  tipo_refeicao: string;
+  data_refeicao: string;
+  hora_refeicao: string;
+  alimentos: [Food];
+}
+
+interface Food {
+  Nome : string;
+  Calorias : number;
+  Quantidade : number;
+};
+
+interface HomeWS {
+  summary : Summary;
+  meals   : Meal[];
 }
 
 @Component({
@@ -30,32 +43,23 @@ interface Meal {
 })
 export class HomePage {
 
-  public dashboardData: DashboardData = {
-    title: 'Acompanhamento',
-    caloriesConsumed: {
-      value: '1347 Kcal',
-      label: 'Kcal consumidas'
-    },
-    caloriesTarget: {
-      value: '2500 Kcal',
-      label: 'Meta Kcal'
-    },
-    caloriesPercent: {
-      value: '53%',
-      label: '% Kcal consumida'
-    },
-    yesterday: {
-      value: '102,70%',
-      label: 'Ontem'
-    },
-    averageWeek: {
-      value: '97,30%',
-      label: 'Média semana'
-    }
-  };
+  public meals : Meal[];
+  public dashboardData : Summary;
 
-  public meals = homeList;
+  constructor(private http: HttpClient, private router: Router) { }  
 
-  constructor() {}
+  private async getMeals () {
+    const url = "https://maissaudews.azurewebsites.net/api/listar_refeicoes?code=N7DQG2DjirAOGVgixaZhRLYtH6sTp/KFNbyVGWe6Mv9zFZQS5G4SEA==";
+    const body = {"user_id" : "1"}
+    const result = await this.http.post<HomeWS>(url,body).toPromise();
+    this.meals = result['meals']
+    this.dashboardData = result['summary']
+    
+  }
+
+  ngOnInit() {
+    this.getMeals();
+
+  }
 
 }
