@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
       if (res?.user) {
         this.showError = false;
         form.reset();
-        this.router.navigateByUrl('home');
+        return this.router.navigateByUrl('home');
       } else if (res?.error) {
         this.showError = true;
         this.errorMessage = res.error.message;

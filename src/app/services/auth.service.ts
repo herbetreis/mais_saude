@@ -106,6 +106,7 @@ export class AuthService {
     this.authSubject.next(false);
     await this._storage.remove(STORAGE_USER);
     await this.saveAtStorage();
+    await this.fAuth.signOut();
   }
 
   public isLoggedIn(): Observable<boolean> {

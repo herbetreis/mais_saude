@@ -20,12 +20,6 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  // public register(form) {
-  //   this.authService.register(form.value).subscribe((res) => {
-  //     this.router.navigateByUrl('login');
-  //   });
-  // }
-
   public register(form) {
     if (!form) {
       this.showError = true;
@@ -42,7 +36,7 @@ export class RegisterPage implements OnInit {
         if (res && res.user) {
           this.showErrorEmail = false;
           form.reset();
-          this.router.navigateByUrl('login');
+          return this.router.navigateByUrl('login');
         } else if (res && res.error) {
           this.showError = true;
           this.errorMessage = res.error.message;
