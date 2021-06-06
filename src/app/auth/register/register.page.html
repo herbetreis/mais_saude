@@ -40,7 +40,7 @@
         </ion-col>
       </ion-row>
       <ion-row justify-content-center>
-        <div *ngIf="showError">Error!</div>
+        <div *ngIf="showError">{{errorMessage}}</div>
         <div *ngIf="showErrorEmail">Error! Por favor, tente com um email diferente</div>
         <div *ngIf="showErrorPassword">Error! As senhas precisam ser idênticas.</div>
       </ion-row>

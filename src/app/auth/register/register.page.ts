@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterPage implements OnInit {
 
   public showError: boolean = false;
+  public errorMessage: string = 'Error!';
   public showErrorEmail: boolean = false;
   public showErrorPassword: boolean = false;
 
@@ -28,20 +29,23 @@ export class RegisterPage implements OnInit {
   public register(form) {
     if (!form) {
       this.showError = true;
-      return
+      return;
     }
     this.showError = false;
     this.showErrorEmail = false;
     this.showErrorPassword = false;
 
-    const { email, name, confirm, password } = form.value
+    const { email, name, confirm, password } = form.value;
     if (confirm === password) {
       this.showErrorPassword = false;
       this.authService.register({ email, name, password }).then((res) => {
-        if (res) {
+        if (res && res.user) {
           this.showErrorEmail = false;
-          form.reset()
+          form.reset();
           this.router.navigateByUrl('login');
+        } else if (res && res.error) {
+          this.showError = true;
+          this.errorMessage = res.error.message;
         } else {
           this.showErrorEmail = true;
         }

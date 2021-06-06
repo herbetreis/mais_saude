@@ -1,10 +1,15 @@
 import { Time } from "@angular/common";
 
 export interface User {
-  id?: number;
+  id?: string;
   name: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
+}
+
+export interface ApiError {
+  code: string;
+  message: string;
 }
 
 export interface Meal {
@@ -16,7 +21,7 @@ export interface Meal {
   };
 
 export interface Food {
-  id: number;  
+  id: number;
   name: string;
   quantity: number;
 }

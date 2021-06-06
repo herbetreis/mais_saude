@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 // import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { User } from '../typings/types';
+import { User, ApiError } from '../typings/types';
 
 // const AUTH_SERVER: string = 'http://localhost:3000';
 const STORAGE_USERS: string = 'users';
@@ -23,7 +24,7 @@ export class AuthService {
   //   this.loadUsers();
   // }
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private fAuth: AngularFireAuth) {
     this.onInit();
   }
 
@@ -65,12 +66,19 @@ export class AuthService {
   //   return this.httpClient.post<User>(`${AUTH_SERVER}/register`, userInfo);
   // }
 
-  public async register(userInfo: User): Promise<User | null> {
-    if (this.findByEmail(userInfo.email)) return null;
-    const user = { ...userInfo, id: this.users.length + 1 };
-    this.users.push(user);
-    await this.saveAtStorage();
-    return user;
+  public async register(userInfo: User): Promise<{ user?: User; error?: ApiError }> {
+    try {
+      const firebaseUser = await this.fAuth.createUserWithEmailAndPassword(
+        userInfo.email,
+        userInfo.password
+      );
+      const user = { name: userInfo.name, id: firebaseUser.user.uid };
+      this.users.push(user);
+      await this.saveAtStorage();
+      return { user };
+    } catch (error) {
+      return { error };
+    }
   }
 
   // public login(userInfo: User): Observable<any> {
@@ -98,7 +106,7 @@ export class AuthService {
   public async logout() {
     this.user = null;
     this.authSubject.next(false);
-    await this._storage.remove(STORAGE_USER)
+    await this._storage.remove(STORAGE_USER);
     await this.saveAtStorage();
   }
 
