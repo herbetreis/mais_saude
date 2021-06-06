@@ -106,13 +106,14 @@ export class AuthService {
     this.authSubject.next(false);
     await this._storage.remove(STORAGE_USER);
     await this.saveAtStorage();
+    await this.fAuth.signOut();
   }
 
   public isLoggedIn(): Observable<boolean> {
     return this.authSubject.asObservable();
   }
 
-  public getUser() {
-    return !!this.user;
+  public getUser(): User | null {
+    return this.user;
   }
 }

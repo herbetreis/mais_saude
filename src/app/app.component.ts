@@ -29,10 +29,19 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
+      title: 'Cadastro de Alimentos',
+      url: '/add-food',
+      onClick: (activeIndex, i) => {
+        activeIndex = i;
+      },
+      icon: 'fast-food'
+    },
+    {
       title: 'Logout',
       url: '',
       onClick: (activeIndex, i) => {
         activeIndex = i;
+        // noinspection JSIgnoredPromiseFromCall
         this.logout();
       },
       icon: 'log-out'
@@ -49,8 +58,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private logout() {
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
+  private async logout() {
+    await this.authService.logout();
+    return this.router.navigateByUrl('/login');
   }
 }
