@@ -1,13 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+
 import { AuthService } from '../services/auth.service';
-
 import { Summary, Meal } from '../typings/types';
-
-interface HomeWS {
-  summary: Summary;
-  meals: Meal[];
-}
 
 @Component({
   selector: 'app-home',
@@ -32,7 +27,10 @@ export class HomePage {
     const user = this.authService.getUser();
     if (user?.id) {
       const url = 'https://maissaudews.azurewebsites.net/api/listar_refeicoes?code=N7DQG2DjirAOGVgixaZhRLYtH6sTp/KFNbyVGWe6Mv9zFZQS5G4SEA==';
-      const result = await this.http.post<HomeWS>(url, { 'user_id': user.id }).toPromise();
+      const result = await this.http.post<{
+        summary: Summary;
+        meals: Meal[];
+      }>(url, { 'user_id': user.id }).toPromise();
       this.meals = [...(result && Array.isArray(result.meals) ? result.meals : [])];
       this.dashboardData = { ...this.dashboardData, ...(result && typeof result.summary === 'object' ? result.summary : {} as Summary) };
     }

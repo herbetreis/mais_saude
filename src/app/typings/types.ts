@@ -25,15 +25,15 @@ export interface Summary {
 }
 
 export interface Meal {
-  _id: string;
-  user_id: string;
-  tipo_refeicao: string;
-  data_refeicao: string;
-  hora_refeicao: string;
-  alimentos: [Food];
+  _id?: string;
+  title: string;
+  time: KeyValue;
+  food: KeyValue;
+  caloriesConsumed: KeyValue;
 }
 
 export interface Food {
+  _id: string;
   Nome: string;
   Calorias: number;
   Quantidade: number;
