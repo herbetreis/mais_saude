@@ -112,7 +112,7 @@ export class AuthService {
     return this.authSubject.asObservable();
   }
 
-  public getUser() {
-    return !!this.user;
+  public getUser(): User | null {
+    return this.user;
   }
 }

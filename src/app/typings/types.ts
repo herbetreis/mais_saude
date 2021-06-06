@@ -1,5 +1,3 @@
-import { Time } from "@angular/common";
-
 export interface User {
   id?: string;
   name: string;
@@ -12,16 +10,31 @@ export interface ApiError {
   message: string;
 }
 
+interface KeyValue {
+  value: string | number;
+  label: string;
+}
+
+export interface Summary {
+  title: string;
+  caloriesConsumed: KeyValue;
+  caloriesTarget: KeyValue;
+  caloriesPercent: KeyValue;
+  yesterday: KeyValue;
+  averageWeek: KeyValue;
+}
+
 export interface Meal {
-    id: number;
-    name: string;
-    date: Date;
-    time: Time;
-    foods: [Food];
-  };
+  _id: string;
+  user_id: string;
+  tipo_refeicao: string;
+  data_refeicao: string;
+  hora_refeicao: string;
+  alimentos: [Food];
+}
 
 export interface Food {
-  id: number;
-  name: string;
-  quantity: number;
+  Nome: string;
+  Calorias: number;
+  Quantidade: number;
 }
