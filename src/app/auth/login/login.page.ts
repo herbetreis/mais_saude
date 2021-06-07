@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
+//argumentos e classes especificas para a page de autenticação dos usuários
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
