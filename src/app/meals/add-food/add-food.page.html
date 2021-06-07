@@ -5,39 +5,50 @@
     </ion-buttons>
 
     <div class="ion-text-center">
-      <ion-label><h1>Novo alimento</h1></ion-label>
+      <ion-label>
+        <h1>Novo alimento</h1>
+      </ion-label>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="save(f)">
 
-  <ion-item>
-    <ion-label position="floating" color="primary" >Nome do Alimento</ion-label>
-    <ion-input autofocus=True></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Nome do Alimento</ion-label>
+      <ion-input autofocus=True name="foodTitle" ngModel required></ion-input>
+    </ion-item>
 
-  <ion-item>  
-    <ion-label position="floating" color="primary" >Peso de referência</ion-label>
-    <ion-input type="number" value=100> </ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Peso de referência</ion-label>
+      <ion-input type="number" name="weight" ngModel required> </ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating" color="primary" >Unidade de medida</ion-label>
-    <ion-select value="1" size=4>
-      <ion-select-option value="1">Gramas</ion-select-option>
-      <ion-select-option value="2">Quilos</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Unidade de medida</ion-label>
+      <ion-select size=4 name="measureUnit" ngModel required>
+        <ion-select-option value="1">Gramas</ion-select-option>
+        <ion-select-option value="2">Quilos</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating" color="primary" >Calorias de referência</ion-label>
-    <ion-input type="number" required=true></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Calorias de referência</ion-label>
+      <ion-input type="number" name="calories" ngModel required></ion-input>
+    </ion-item>
 
-  <div class='save-button'>
-    <ion-button shape="round"> Salvar </ion-button>
-  </div>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button Expand="block" routerLink="/home" replaceUrl="true"> Cancelar </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button Expand="block" type="submit" [disabled]="f.invalid"> Salvar </ion-button>
+      </ion-col>
+      
+    </ion-row>
 
-  
+  </form>
+
+
 </ion-content>
