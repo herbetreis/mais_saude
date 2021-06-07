@@ -56,8 +56,8 @@ export class AuthService {
     return null;
   }
 
-  private async createUserInStorage(userInfo: User, firebaseUser: firebase.auth.UserCredential) {
-    const user = { name: userInfo.name, id: firebaseUser.user.uid };
+  private async createUserInStorage(firebaseUser: User) {
+    const user = { id: firebaseUser.user.uid };
     this.users.push(user);
     await this.saveAtStorage();
     return { user };
@@ -69,33 +69,32 @@ export class AuthService {
         userInfo.email,
         userInfo.password
       );
-      return this.createUserInStorage(userInfo, firebaseUser);
+      await firebaseUser.user.updateProfile({
+        displayName: userInfo.name
+      })
+      await this.createUserInStorage(firebaseUser);
+      return { user: firebaseUser.user };
     } catch (error) {
-      if (error?.code === 'auth/email-already-in-use') {
-        const userLogged = await this.login(userInfo);
-        await this.logout();
-        if (userLogged?.firebaseUser) {
-          // does not have user in localstorage,
-          // maybe create them and return the user
-          await this.createUserInStorage(userInfo, userLogged.firebaseUser);
-        }
-      }
       return { error };
     }
   }
 
-  public async login(userInfo: User): Promise<{ user?: User; error?: ApiError; firebaseUser?: firebase.auth.UserCredential }> {
+  public async login(userInfo: User): Promise<{ user?: User; error?: ApiError }> {
     try {
       const firebaseUser: firebase.auth.UserCredential = await this.fAuth.signInWithEmailAndPassword(
         userInfo.email,
         userInfo.password
       );
-      const user = this.findById(firebaseUser.user.uid);
-      if (!user) return { firebaseUser };
+
+      let user = this.findById(firebaseUser.user.uid);
+      if (!user) {
+        await this.createUserInStorage(firebaseUser);
+        user = this.findById(firebaseUser.user.uid);
+      }
       this.user = { ...user };
       this.authSubject.next(true);
       await this.saveAtStorage();
-      return { user };
+      return { user: firebaseUser.user };
     } catch (error) {
       return { error };
     }

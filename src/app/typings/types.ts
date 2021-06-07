@@ -1,6 +1,8 @@
-export interface User {
+import firebase from 'firebase';
+
+export interface User extends Partial<firebase.auth.UserCredential & firebase.User> {
   id?: string;
-  name: string;
+  name?: string;
   email?: string;
   password?: string;
 }
