@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu side="start" menuId="first" contentId="main-content">
+    <ion-menu [hidden]="!showMenu" side="start" menuId="first" contentId="main-content">
       <ion-content>
         <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let pages of pages; let i = index">
