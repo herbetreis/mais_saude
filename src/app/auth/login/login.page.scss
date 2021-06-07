@@ -1,3 +1,8 @@
+ion-content form ion-grid ion-row {
+  display: flex;
+  justify-content: center;
+}
+
 ion-button.login-button {
   margin: 1rem 0;
   --background: #FFFFFF;

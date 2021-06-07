@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { AuthService } from './services/auth.service';
 
@@ -10,7 +11,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
 
-
+  public showMenu: boolean = false;
   public pages = [
     {
       title: 'Dashboard',
@@ -48,12 +49,35 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private urlSubject = new BehaviorSubject(null);
+  private url: Observable<{ id: number; url: string; urlAfterRedirects: string } | null>;
+  private loggedInObservable;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.url = this.urlSubject.asObservable();
+  }
 
   async ngOnInit() {
-    this.authService.isLoggedIn().subscribe(isLoggedIn => {
-      if (isLoggedIn === true && this.router.routerState.snapshot.url?.startsWith('/login')) {
-        this.router.navigate(['home']);
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.urlSubject.next({ ...event });
+      }
+    });
+
+    this.url.subscribe(currentUrl => {
+      if (currentUrl) {
+        if (this.loggedInObservable) {
+          this.loggedInObservable.unsubscribe()
+        }
+
+        this.loggedInObservable = this.authService.isLoggedIn().subscribe(isLoggedIn => {
+          const url = this.router.routerState.snapshot.url;
+          this.showMenu = !(url?.startsWith('/login') || url?.startsWith('/register'))
+          if (isLoggedIn === true && url?.startsWith('/login')) {
+            this.router.navigate(['home']);
+          }
+        });
       }
     });
   }
