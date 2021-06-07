@@ -1,39 +1,52 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-          <ion-menu-button autoHide="false"></ion-menu-button>
-      </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
 
-      <div class="ion-text-center">
+    <div class="ion-text-center">
       <ion-label><h1>Configurações do Usuário</h1></ion-label>
-      </div> 
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <form #f="ngForm" (ngSubmit)="update(f)">
+    <img src="../../../assets/person-circle-outline.svg">
 
-      <img src="../../../assets/person-circle-outline.svg">
+    <br>
+    <ion-item>
+      <ion-label position="floating" color="primary">Alterar email</ion-label>
+      <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="userInfo.email" required></ion-input>
+    </ion-item>
 
-      <br>  
-      <ion-item>
-        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar usuário</ion-label>
-        <ion-input class="user.settings.input"></ion-input>
-      </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating" color="primary">Alterar Senha</ion-label>
+      <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="userInfo.password" required></ion-input>
+    </ion-item>
+<!--    <ion-item>-->
+<!--      <ion-label class="user-settings" position="floating" color="primary">Alterar senha</ion-label>-->
+<!--      <ion-input class="user.settings.input"></ion-input>-->
+<!--    </ion-item>-->
 
-      <br>
-      <ion-item>
-        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar senha</ion-label>
-        <ion-input class="user.settings.input"></ion-input>
-      </ion-item>  
-
-      <br>
-      <ion-item>
-        <ion-label  class = "user-settings" position="floating" color="primary" >Alterar meta calorias</ion-label>
-        <ion-input class="user.settings.input"></ion-input>
-      </ion-item>  
-      <br>
-      <br>
-      <br>
-        <ion-button Expand="block"> Salvar </ion-button>
-
+<!--    <br>-->
+<!--    <ion-item>-->
+<!--      <ion-label class="user-settings" position="floating" color="primary">Alterar meta calorias</ion-label>-->
+<!--      <ion-input class="user.settings.input"></ion-input>-->
+<!--    </ion-item>-->
+    <br>
+    <br>
+    <br>
+    <ion-button
+      type="submit"
+      size="medium"
+      shape="round"
+      [disabled]="f.invalid"
+      expand="block"
+    >
+      Salvar
+    </ion-button>
+<!--    <ion-button expand="block"> Salvar</ion-button>-->
+  </form>
 </ion-content>

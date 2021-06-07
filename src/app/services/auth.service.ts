@@ -17,6 +17,7 @@ export class AuthService {
   private authSubject = new BehaviorSubject(null);
   private users: User[] = [];
   private user: User = null;
+  private firebaseUser: User = null;
 
   constructor(private storage: Storage, private fAuth: AngularFireAuth) {
     this.onInit();
@@ -71,7 +72,7 @@ export class AuthService {
       );
       await firebaseUser.user.updateProfile({
         displayName: userInfo.name
-      })
+      });
       await this.createUserInStorage(firebaseUser);
       return { user: firebaseUser.user };
     } catch (error) {
@@ -95,6 +96,15 @@ export class AuthService {
       this.authSubject.next(true);
       await this.saveAtStorage();
       return { user: firebaseUser.user };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  public async update(user: firebase.User, newUserInfo: User): Promise<{ error?: ApiError }> {
+    try {
+      await user.updateEmail(newUserInfo.email)
+      await user.updatePassword(newUserInfo.password)
     } catch (error) {
       return { error };
     }
