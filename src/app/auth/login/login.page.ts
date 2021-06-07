@@ -21,7 +21,6 @@ export class LoginPage implements OnInit {
 
   public login(form) {
     this.authService.login(form.value).then((res) => {
-      console.log('teste', res);
       if (res?.user) {
         this.showError = false;
         form.reset();
